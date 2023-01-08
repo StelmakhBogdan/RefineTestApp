@@ -43,7 +43,7 @@ export const Header = () => {
         onChange={() => setMode(mode === "light" ? "dark" : "light")}
         defaultChecked={mode === "dark"}
       />
-      <Dropdown dropdownRender={RenderMenu}>
+      <Dropdown dropdownRender={() => <RenderMenu/>}>
         <Button type="link">
           <Space>
             <Avatar size={16} src={`/images/flags/${currentLocale}.svg`} />
