@@ -1,4 +1,5 @@
 import React, {
+  FC,
   PropsWithChildren,
   createContext,
   useEffect,
@@ -15,7 +16,7 @@ export const ColorModeContext = createContext<ColorModeContextType>(
   {} as ColorModeContextType
 );
 
-export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
+export const ColorModeContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
   const colorModeFromLocalStorage = localStorage.getItem("colorMode");

@@ -1,13 +1,11 @@
-import {useContext, ReactNode, FC} from "react";
+import {useContext} from "react";
 import {
   useGetLocale,
-  useSetLocale,
   useGetIdentity,
 } from "@pankod/refine-core";
 import {
   AntdLayout,
   Space,
-  Menu,
   Button,
   Icons,
   Dropdown,
@@ -15,38 +13,19 @@ import {
   Typography,
   Switch,
 } from "@pankod/refine-antd";
-import { useTranslation } from "react-i18next";
 import { ColorModeContext } from "contexts";
+
+import RenderMenu from './components/RenderMenu';
 
 const { DownOutlined } = Icons;
 const { Text } = Typography;
 
-export const Header: FC = () => {
-  const { i18n } = useTranslation();
+export const Header = () => {
   const locale = useGetLocale();
-  const changeLanguage = useSetLocale();
   const { data: user } = useGetIdentity();
   const { mode, setMode } = useContext(ColorModeContext);
 
   const currentLocale = locale();
-
-  const menu: ReactNode = (
-    <Menu selectedKeys={currentLocale ? [currentLocale] : []}>
-      {[...(i18n.languages || [])].sort().map((lang: string) => (
-        <Menu.Item
-          key={lang}
-          onClick={() => changeLanguage(lang)}
-          icon={
-            <span style={{ marginRight: 8 }}>
-              <Avatar size={16} src={`/images/flags/${lang}.svg`} />
-            </span>
-          }
-        >
-          {lang === "en" ? "English" : "German"}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
 
   return (
     <AntdLayout.Header
@@ -64,7 +43,7 @@ export const Header: FC = () => {
         onChange={() => setMode(mode === "light" ? "dark" : "light")}
         defaultChecked={mode === "dark"}
       />
-      <Dropdown overlay={menu}>
+      <Dropdown dropdownRender={RenderMenu}>
         <Button type="link">
           <Space>
             <Avatar size={16} src={`/images/flags/${currentLocale}.svg`} />
